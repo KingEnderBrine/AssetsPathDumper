@@ -68,7 +68,7 @@ namespace AssetsPathDumper
 							var assetFileInstance = manager.LoadAssetsFile(filePath, false);
 							paths = ReadResourcesPaths(manager, assetFileInstance);
 
-							WriteFileTable(fileName, paths, writer);
+							WriteFileTable("Resources", paths, writer);
 							break;
 				        case FileType.InvalidFile:
 							continue;
