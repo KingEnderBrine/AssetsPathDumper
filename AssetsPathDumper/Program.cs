@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace AssetsPathDumper
@@ -14,6 +15,7 @@ namespace AssetsPathDumper
 
 		static int Main(string[] args)
 		{
+			var exeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			if (args.Length == 0)
             {
 				Console.WriteLine("No file/directory specified");
@@ -36,15 +38,15 @@ namespace AssetsPathDumper
 				return -1;
 			}
 
-			if (!File.Exists("classdata.tpk"))
+			if (!File.Exists(Path.Combine(exeDirectory, "classdata.tpk")))
             {
 				Console.WriteLine("Couldn't find \"classdata.tpk\" file");
 				return -1;
             }
 
 			var manager = new AssetsManager();
-			manager.LoadClassPackage("classdata.tpk");
-			using (var writer = new StreamWriter(new FileStream("assetPathsDump.html", FileMode.Create)))
+			manager.LoadClassPackage(Path.Combine(exeDirectory, "classdata.tpk"));
+			using (var writer = new StreamWriter(new FileStream(Path.Combine(exeDirectory, "assetPathsDump.html"), FileMode.Create)))
 			{
 				foreach (var filePath in filePaths)
 				{
