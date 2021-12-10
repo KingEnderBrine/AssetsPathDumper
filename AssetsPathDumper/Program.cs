@@ -36,6 +36,12 @@ namespace AssetsPathDumper
 				return -1;
 			}
 
+			if (!File.Exists("classdata.tpk"))
+            {
+				Console.WriteLine("Couldn't find \"classdata.tpk\" file");
+				return -1;
+            }
+
 			var manager = new AssetsManager();
 			manager.LoadClassPackage("classdata.tpk");
 			using (var writer = new StreamWriter(new FileStream("assetPathsDump.html", FileMode.Create)))
